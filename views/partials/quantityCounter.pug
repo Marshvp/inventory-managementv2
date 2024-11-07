@@ -2,6 +2,7 @@
 form(class="max-w-xs pt-10" method="post" action="/updateQuantity")
 
     input(type="hidden" name="product_id" value=product.product_id)
+    input(type="hidden" name="initQuantity" value=product.quantity)
     label(for="qunatity-input" class="block mb-2 text-sm font-medium text-gray-900") Change quantity:
     div(class="relative flex item-center max-w-[8rem]")
         button(type="button" id="decrement-button" data-input-counter-decrement="quantity-input" class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none")

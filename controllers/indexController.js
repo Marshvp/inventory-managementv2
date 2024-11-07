@@ -57,8 +57,9 @@ exports.itemDetailsGet = async (req, res) => {
     try{
         const id = req.params.id
         const result = await db.getfilteredItem(id)
+        const logs = await db.getQuantityLogs(id)
         console.log(result);
-        res.render('itemDetails', { product: result[0]})    
+        res.render('itemDetails', { product: result[0], logs: logs})    
     } catch(error) {
         console.error("Error getting itme details:", error);
     }
@@ -68,21 +69,26 @@ exports.updateQuantity = async (req, res) => {
     try{
         console.log(req.body);
         const id = req.body.product_id
+        const initQuantity = req.body.initQuantity
         const quantity_change = parseInt(req.body['quantity-input'], 10);
 
-        if(isNaN(quantity_change)){
-            return res.status(404).send('Invalid quantity value');
+        if((initQuantity - quantity_change) <= 0) {
+            res.redirect(`/itemDetails/${id}`)
+        } else {
+            if(isNaN(quantity_change)){
+                return res.status(404).send('Invalid quantity value');
+            }
+            let direction = ''
+            if ('increase' in req.body){
+                direction = 'increase'
+            } else if ('decrease' in req.body) {
+                direction = 'decrease'
+            }
+            console.log("direction", direction);
+            
+            const result = await db.updateQuantity(id, quantity_change, direction)
+            res.redirect(`/itemDetails/${id}`)
         }
-        let direction = ''
-        if ('increase' in req.body){
-            direction = 'increase'
-        } else if ('decrease' in req.body) {
-            direction = 'decrease'
-        }
-        console.log("direction", direction);
-        
-        const result = await db.updateQuantity(id, quantity_change, direction)
-        res.redirect(`/itemDetails/${id}`)
         
     } catch (error) {
         console.error("Error updating quantity:", error)

@@ -16,3 +16,22 @@ block content
 
     div(class="flex-auto mt-10")
         h1 TODO TABLE FOR LOGSh
+
+        div(class="relative overflow-x-auto shadow-md sm:rounded-lg")
+            table(class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400")
+                thead(class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400")
+                    tr
+                        th(scope="col" class="px-6 py-3") Log_ID
+                        th(scope="col" class="px-6 py-3") Product ID
+                        th(scope="col" class="px-6 py-3") Change Amount
+                        th(scope="col" class="px-6 py-3") Change Reason
+                        th(scope="col" class="px-6 py-3") Change Date
+                tbody
+                    each log in logs
+                        tr(class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700")
+                            th(scope="row" class="px-6 py-4 font-medium text-grey-900 whitespace-nowrap dark:text-white") #{log.log_id}
+                            td(class="px-6 py-4") #{log.product_id}
+                            td(class="px-6 py-4") #{log.change_amount}
+                            td(class="px-6 py-4") #{log.change_reason}
+                            td(class="px-6 py-4") #{log.change_date}
+        a(href="/")                

@@ -82,7 +82,7 @@ async function updateQuantity(id, quantity_amount, direction) {
             )
 
             const updateLogInc = await pool.query(
-                "INSERT INTO quantity_log (product_id, change_amount, change_reason)",
+                "INSERT INTO quantity_log (product_id, change_amount, change_reason) VALUES ($1, $2, $3)",
                 [id, quantity_amount, "Quantity Increase"]
             )
         } else {
@@ -91,12 +91,24 @@ async function updateQuantity(id, quantity_amount, direction) {
                 [quantity_amount, id]
             )
             const updateLogDec = await pool.query(
-                "INSERT INTO quantity_log (product_id, change_amount, change_reason)",
+                "INSERT INTO quantity_log (product_id, change_amount, change_reason) VALUES ($1, $2, $3)",
                 [id, quantity_amount, "Quantity Decrease"]
             )
         }
     } catch(error) {
         console.error("Error updating:", error);
+    }
+}
+
+async function getQuantityLogs(id) {
+    try {
+        const result = await pool.query(
+            "SELECT * FROM quantity_log WHERE product_id = $1",
+            [id]
+        )
+        return result.rows
+    } catch (error) {
+        console.error("Error in getting quantity logs:", error)
     }
 }
 
@@ -106,5 +118,6 @@ module.exports = {
     getAllProducts,
     getfilteredCategory,
     getfilteredItem,
-    updateQuantity
+    updateQuantity,
+    getQuantityLogs
 }

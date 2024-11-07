@@ -1,0 +1,18 @@
+extends layout 
+
+block content 
+
+    h1.text-2xl.font-bold.mb-6.text-gray-800.text-center.py-5.underline= product.product_name
+
+    div(class="flex flex-col")
+        div(class=" border border-gray-200 w-full flex flex-col p-8")
+            if product.product_description
+                p(class="text-xl max-h-80 md:min-h-80")= product.product_description
+            else
+                p(class="block h-40 max-h-80 md:min-h-80") No Description Given
+            p(class="pt-10 text-2xl text-grey-900") Quantity: #{product.quantity}
+    div(class="flex ")
+        include partials/quantityCounter
+
+    div(class="flex-auto mt-10")
+        h1 TODO TABLE FOR LOGSh

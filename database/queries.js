@@ -112,6 +112,17 @@ async function getQuantityLogs(id) {
     }
 }
 
+async function deleteItem(id) {
+    try {
+        const result = await pool.query(
+            "DELETE FROM products WHERE product_id = $1",
+            [id]
+        )
+    } catch (error) {
+        console.error("Error on DB when deleting item", error);
+    }
+}
+
 
 module.exports = {
     addProduct,
@@ -119,5 +130,6 @@ module.exports = {
     getfilteredCategory,
     getfilteredItem,
     updateQuantity,
-    getQuantityLogs
+    getQuantityLogs,
+    deleteItem
 }

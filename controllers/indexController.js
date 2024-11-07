@@ -94,3 +94,15 @@ exports.updateQuantity = async (req, res) => {
         console.error("Error updating quantity:", error)
     }
 }
+
+exports.deleteItem = async (req, res) => {
+    try {
+        console.log(req.params.id);
+        const id = req.params.id;
+        const result = await db.deleteItem(id);
+        res.redirect('/')
+        
+    } catch (error) {
+        console.error("error deleting item:", error)
+    }
+}

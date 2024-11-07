@@ -17,5 +17,7 @@ indexRouter.get('/itemDetails/:id', indexController.itemDetailsGet)
 
 indexRouter.post('/updateQuantity', indexController.updateQuantity)
 
+indexRouter.get('/deleteItem/:id', indexController.deleteItem)
+
 
 module.exports = indexRouter
